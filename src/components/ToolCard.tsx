@@ -1,64 +1,49 @@
 import { Link } from 'react-router-dom'
-
-// Map category to accent bar color
-const accentBarColors: Record<string, string> = {
-  'Text & Encoding': '#8b5cf6',
-  'Data & Formats': '#3b82f6',
-  'Network & Web': '#06b6d4',
-  'Security & Crypto': '#22c55e',
-  'Generators': '#eab308',
-  'Date & Time': '#f97316',
-  'Colors & Design': '#ec4899',
-  'Media & Files': '#ef4444',
-  'Dev Utilities': '#6366f1',
-  // Home page short names
-  'Data': '#3b82f6',
-  'Security': '#22c55e',
-  'Colors': '#ec4899',
-}
+import { toolIcons, categoryColors } from '../lib/toolIcons'
 
 interface ToolCardProps {
   path: string
   label: string
   description: string
   category: string
-  categoryColor: string
-  icon: string
+  categoryColor?: string
+  icon?: string
 }
 
-export default function ToolCard({ path, label, description, category, categoryColor, icon }: ToolCardProps) {
-  const barColor = accentBarColors[category] || 'var(--accent)'
+export default function ToolCard({ path, label, description, category }: ToolCardProps) {
+  const icon = toolIcons[path]
+  const cat = categoryColors[category] ?? { text: 'var(--accent)', bg: 'var(--accent-muted)', dot: 'var(--accent)' }
 
   return (
     <Link
       to={path}
-      className={`group block rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${categoryColor}`}
-      style={{
-        border: '1px solid var(--border)',
-        background: 'var(--bg-surface)',
-        textDecoration: 'none',
+      style={{ textDecoration: 'none', display: 'block', background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px', transition: 'border-color 0.15s, box-shadow 0.15s, transform 0.15s' }}
+      onMouseEnter={e => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = cat.dot
+        el.style.boxShadow = `0 4px 20px rgba(0,0,0,0.12)`
+        el.style.transform = 'translateY(-1px)'
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = 'var(--border)'
+        el.style.boxShadow = 'none'
+        el.style.transform = 'none'
       }}
     >
-      {/* Colored top bar */}
-      <div className="h-1 w-full" style={{ background: barColor }} />
-      <div className="p-4">
-        <div className="flex items-start justify-between mb-2">
-          <span className="text-2xl leading-none">{icon}</span>
-          <span
-            className={`text-xs font-medium px-2 py-0.5 rounded-full ${categoryColor}`}
-            style={{ background: 'var(--bg-elevated)' }}
-          >
-            {category}
-          </span>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '10px' }}>
+        <div style={{ width: 36, height: 36, borderRadius: 8, background: cat.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: cat.text }}>
+          {icon ?? <span style={{ fontSize: 14, fontWeight: 600, color: cat.text }}>{label[0]}</span>}
         </div>
-        <h3
-          className="font-semibold mb-1 group-hover:transition-colors text-sm"
-          style={{ color: 'var(--text-primary)' }}
-        >
-          {label}
-        </h3>
-        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{description}</p>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)', marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{label}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: cat.dot, flexShrink: 0 }} />
+            <span style={{ fontSize: 11, color: cat.text, fontWeight: 500 }}>{category}</span>
+          </div>
+        </div>
       </div>
+      <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{description}</p>
     </Link>
   )
 }

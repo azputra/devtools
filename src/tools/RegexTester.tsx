@@ -57,7 +57,7 @@ export default function RegexTester() {
         <div className="panel">
           <div className="panel-label">Pattern</div>
           <div className="flex items-center gap-2">
-            <span className="text-gray-500 text-lg font-mono">/</span>
+            <span className="text-lg font-mono" style={{ color: 'var(--text-muted)' }}>/</span>
             <input
               className="input-base flex-1"
               value={pattern}
@@ -65,17 +65,17 @@ export default function RegexTester() {
               placeholder="Enter regex pattern..."
               spellCheck={false}
             />
-            <span className="text-gray-500 text-lg font-mono">/</span>
+            <span className="text-lg font-mono" style={{ color: 'var(--text-muted)' }}>/</span>
             <div className="flex gap-1">
               {['g', 'i', 'm', 's'].map(f => (
                 <button
                   key={f}
                   onClick={() => toggleFlag(f)}
-                  className={`w-8 h-8 rounded-md text-sm font-mono font-medium transition-colors ${
-                    flags.includes(f)
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
-                  }`}
+                  className="w-8 h-8 rounded-md text-sm font-mono font-medium transition-colors"
+                  style={{
+                    background: flags.includes(f) ? 'var(--accent)' : 'var(--bg-elevated)',
+                    color: flags.includes(f) ? 'white' : 'var(--text-muted)',
+                  }}
                 >
                   {f}
                 </button>
@@ -118,17 +118,17 @@ export default function RegexTester() {
             <div className="panel-label">Match List</div>
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {result.matches.map((m, i) => (
-                <div key={i} className="bg-gray-800 rounded-lg p-3 text-sm">
+                <div key={i} className="rounded-lg p-3 text-sm" style={{ background: 'var(--bg-elevated)' }}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-indigo-400 text-xs font-medium">Match {i + 1}</span>
-                    <span className="text-gray-500 text-xs">index {m.index}</span>
+                    <span className="text-xs font-medium" style={{ color: 'var(--accent)' }}>Match {i + 1}</span>
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>index {m.index}</span>
                   </div>
-                  <div className="font-mono text-green-300">"{m[0]}"</div>
+                  <div className="font-mono" style={{ color: 'var(--text-primary)' }}>"{m[0]}"</div>
                   {m.length > 1 && (
                     <div className="mt-1 space-y-0.5">
                       {Array.from({ length: m.length - 1 }, (_, g) => (
-                        <div key={g} className="text-xs text-gray-400">
-                          Group {g + 1}: <span className="text-yellow-300 font-mono">"{m[g + 1]}"</span>
+                        <div key={g} className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                          Group {g + 1}: <span className="font-mono" style={{ color: 'var(--accent)' }}>"{m[g + 1]}"</span>
                         </div>
                       ))}
                     </div>

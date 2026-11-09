@@ -83,14 +83,14 @@ export default function CsvJsonConverter() {
       <div className="space-y-4">
         {/* Mode toggle */}
         <div className="flex items-center gap-3">
-          <span className={`text-sm font-medium ${mode === 'csv-to-json' ? 'text-white' : 'text-gray-500'}`}>CSV</span>
+          <span className="text-sm font-medium" style={{ color: mode === 'csv-to-json' ? 'var(--text-primary)' : 'var(--text-muted)' }}>CSV</span>
           <button onClick={switchMode} className="btn-secondary px-3 py-1.5 text-xs flex items-center gap-1.5">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
             </svg>
             Swap
           </button>
-          <span className={`text-sm font-medium ${mode === 'json-to-csv' ? 'text-white' : 'text-gray-500'}`}>JSON</span>
+          <span className="text-sm font-medium" style={{ color: mode === 'json-to-csv' ? 'var(--text-primary)' : 'var(--text-muted)' }}>JSON</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -135,17 +135,17 @@ export default function CsvJsonConverter() {
             <div className="overflow-auto">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="border-b border-gray-700">
+                  <tr style={{ borderBottom: '1px solid var(--border)' }}>
                     {headers.map(h => (
-                      <th key={h} className="px-3 py-2 text-gray-400 font-medium whitespace-nowrap">{h}</th>
+                      <th key={h} className="px-3 py-2 font-medium whitespace-nowrap" style={{ color: 'var(--text-secondary)' }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {result.tableData.map((row, i) => (
-                    <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/50">
+                    <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
                       {headers.map(h => (
-                        <td key={h} className="px-3 py-2 text-gray-300 font-mono whitespace-nowrap">{row[h]}</td>
+                        <td key={h} className="px-3 py-2 font-mono whitespace-nowrap" style={{ color: 'var(--text-secondary)' }}>{row[h]}</td>
                       ))}
                     </tr>
                   ))}

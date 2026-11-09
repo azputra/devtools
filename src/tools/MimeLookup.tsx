@@ -72,7 +72,7 @@ function getCategoryColor(mime: string) {
   if (mime.startsWith('text/')) return 'text-green-400 bg-green-500/10'
   if (mime.startsWith('font/')) return 'text-yellow-400 bg-yellow-500/10'
   if (mime.startsWith('application/')) return 'text-blue-400 bg-blue-500/10'
-  return 'text-gray-400 bg-gray-500/10'
+  return 'text-slate-400'
 }
 
 export default function MimeLookup() {
@@ -116,8 +116,8 @@ export default function MimeLookup() {
             <div className="text-xs text-indigo-400 mb-1">Extension match</div>
             <div className="flex items-center justify-between">
               <div>
-                <span className="font-mono text-white">{q.startsWith('.') ? q : '.' + q}</span>
-                <span className="text-gray-500 mx-3">→</span>
+                <span className="font-mono" style={{ color: 'var(--text-primary)' }}>{q.startsWith('.') ? q : '.' + q}</span>
+                <span className="mx-3" style={{ color: 'var(--text-muted)' }}>→</span>
                 <span className="font-mono text-indigo-300">{extMatch}</span>
               </div>
               <button onClick={() => copy(extMatch, 'ext')} className="copy-btn">
@@ -135,10 +135,10 @@ export default function MimeLookup() {
                 <span className={`text-xs px-2 py-0.5 rounded font-medium flex-shrink-0 ${getCategoryColor(mime)}`}>
                   {mime.split('/')[0]}
                 </span>
-                <span className="font-mono text-sm text-gray-200 flex-1">{mime}</span>
+                <span className="font-mono text-sm flex-1" style={{ color: 'var(--text-primary)' }}>{mime}</span>
                 <div className="flex gap-1.5 flex-wrap">
                   {exts.map(ext => (
-                    <span key={ext} className="text-xs bg-gray-800 text-gray-400 px-1.5 py-0.5 rounded font-mono">{ext}</span>
+                    <span key={ext} className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>{ext}</span>
                   ))}
                 </div>
                 <button onClick={() => copy(mime, mime)} className="copy-btn opacity-0 group-hover:opacity-100 transition-opacity">

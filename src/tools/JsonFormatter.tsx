@@ -83,9 +83,11 @@ export default function JsonFormatter() {
                 <button
                   key={m}
                   onClick={() => setMode(m)}
-                  className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
-                    mode === m ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-                  }`}
+                  className="px-3 py-1 rounded-md text-xs font-medium transition-colors"
+                  style={{
+                    background: mode === m ? 'var(--accent)' : 'var(--bg-elevated)',
+                    color: mode === m ? 'white' : 'var(--text-muted)',
+                  }}
                 >
                   {m === 'pretty' ? 'Prettify' : 'Minify'}
                 </button>
@@ -94,7 +96,7 @@ export default function JsonFormatter() {
                 <select
                   value={indent}
                   onChange={e => setIndent(Number(e.target.value))}
-                  className="ml-2 bg-gray-800 border border-gray-700 rounded-md text-xs text-gray-300 px-2 py-1 focus:outline-none"
+                  className="ml-2 select-inline"
                 >
                   <option value={2}>2 spaces</option>
                   <option value={4}>4 spaces</option>

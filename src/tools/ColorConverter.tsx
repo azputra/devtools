@@ -122,8 +122,8 @@ export default function ColorConverter() {
         <div className="panel">
           <div className="flex items-center gap-4">
             <div
-              className="w-20 h-20 rounded-xl border border-gray-700 flex-shrink-0"
-              style={{ backgroundColor: hex }}
+              className="w-20 h-20 rounded-xl flex-shrink-0"
+              style={{ border: '1px solid var(--border)', backgroundColor: hex }}
             />
             <div className="flex-1">
               <div className="panel-label">HEX</div>
@@ -165,7 +165,7 @@ export default function ColorConverter() {
               <div className="grid grid-cols-3 gap-3">
                 {(['R', 'G', 'B'] as const).map((ch, i) => (
                   <div key={ch}>
-                    <label className="text-xs text-gray-500 mb-1 block">{ch} (0–255)</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>{ch} (0–255)</label>
                     <input
                       type="number" min={0} max={255}
                       className="input-base"
@@ -190,7 +190,7 @@ export default function ColorConverter() {
               <div className="grid grid-cols-3 gap-3">
                 {[['H', 360], ['S', 100], ['L', 100]].map(([ch, max], i) => (
                   <div key={ch}>
-                    <label className="text-xs text-gray-500 mb-1 block">{ch} (0–{max})</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>{ch} (0–{max})</label>
                     <input
                       type="number" min={0} max={max}
                       className="input-base"
@@ -211,7 +211,7 @@ export default function ColorConverter() {
                   { bg: '#ffffff', label: 'vs White', contrast: contrastWhite },
                   { bg: '#000000', label: 'vs Black', contrast: contrastBlack },
                 ].map(({ bg, label, contrast }) => (
-                  <div key={label} className="bg-gray-800 rounded-xl p-4">
+                  <div key={label} className="rounded-xl p-4" style={{ background: 'var(--bg-elevated)' }}>
                     <div
                       className="rounded-lg p-3 mb-3 text-center text-sm font-medium"
                       style={{ backgroundColor: bg, color: hex }}
@@ -219,8 +219,8 @@ export default function ColorConverter() {
                       Sample Text
                     </div>
                     <div className="text-center">
-                      <div className="text-xl font-bold text-white">{contrast.toFixed(2)}:1</div>
-                      <div className="text-xs text-gray-500">{label}</div>
+                      <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{contrast.toFixed(2)}:1</div>
+                      <div className="text-xs" style={{ color: 'var(--text-muted)' }}>{label}</div>
                       <div className={`mt-1 text-xs font-medium ${
                         getWcag(contrast) === 'Fail' ? 'text-red-400' :
                         getWcag(contrast) === 'AA Large' ? 'text-yellow-400' :

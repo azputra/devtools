@@ -102,7 +102,7 @@ export default function PermissionsCalculator() {
           <div className="grid grid-cols-4 gap-2 mb-3">
             <div />
             {fields.map(f => (
-              <div key={f} className="text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
+              <div key={f} className="text-center text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
                 {f.charAt(0).toUpperCase() + f.slice(1)}
               </div>
             ))}
@@ -111,18 +111,18 @@ export default function PermissionsCalculator() {
           {entities.map(entity => (
             <div key={entity} className="grid grid-cols-4 gap-2 mb-3">
               <div className="flex items-center">
-                <span className="text-sm font-medium text-gray-300 capitalize">{entity}</span>
-                <span className="ml-2 text-xs text-gray-600">{permToOctal(perms[entity])}</span>
+                <span className="text-sm font-medium capitalize" style={{ color: 'var(--text-secondary)' }}>{entity}</span>
+                <span className="ml-2 text-xs" style={{ color: 'var(--text-muted)' }}>{permToOctal(perms[entity])}</span>
               </div>
               {fields.map(field => (
                 <div key={field} className="flex justify-center">
                   <button
                     onClick={() => togglePerm(entity, field)}
-                    className={`w-12 h-12 rounded-xl text-sm font-mono font-bold transition-all ${
-                      perms[entity][field]
-                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/50'
-                        : 'bg-gray-800 text-gray-600 hover:bg-gray-700'
-                    }`}
+                    className="w-12 h-12 rounded-xl text-sm font-mono font-bold transition-all"
+                    style={{
+                      background: perms[entity][field] ? 'var(--accent)' : 'var(--bg-elevated)',
+                      color: perms[entity][field] ? 'white' : 'var(--text-muted)',
+                    }}
                   >
                     {field === 'read' ? 'r' : field === 'write' ? 'w' : 'x'}
                   </button>
@@ -147,7 +147,7 @@ export default function PermissionsCalculator() {
                   : <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>}
                 </button>
               </div>
-              <div className="font-mono text-sm text-gray-200">{value}</div>
+              <div className="font-mono text-sm" style={{ color: 'var(--text-primary)' }}>{value}</div>
             </div>
           ))}
         </div>
@@ -160,12 +160,14 @@ export default function PermissionsCalculator() {
               <button
                 key={p.octal}
                 onClick={() => setFromOctal(p.octal)}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left ${
-                  octal === p.octal ? 'bg-indigo-600/20 border border-indigo-500/40' : 'bg-gray-800 hover:bg-gray-700'
-                }`}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all text-left"
+                style={{
+                  background: octal === p.octal ? 'var(--accent-muted)' : 'var(--bg-elevated)',
+                  border: `1px solid ${octal === p.octal ? 'var(--accent)' : 'transparent'}`,
+                }}
               >
-                <span className="font-mono text-indigo-400 w-8 flex-shrink-0">{p.label}</span>
-                <span className="text-gray-300 flex-1">{p.desc}</span>
+                <span className="font-mono w-8 flex-shrink-0" style={{ color: 'var(--accent)' }}>{p.label}</span>
+                <span className="flex-1" style={{ color: 'var(--text-secondary)' }}>{p.desc}</span>
               </button>
             ))}
           </div>

@@ -87,7 +87,8 @@ export default function ImageUtility() {
       <div className="space-y-4">
         {/* Drop zone */}
         <div
-          className="panel border-2 border-dashed border-gray-700 hover:border-indigo-500 transition-colors cursor-pointer text-center py-8"
+          className="panel border-2 border-dashed transition-colors cursor-pointer text-center py-8"
+          style={{ borderColor: 'var(--border)' }}
           onDrop={handleDrop}
           onDragOver={e => e.preventDefault()}
           onClick={() => fileRef.current?.click()}
@@ -102,7 +103,7 @@ export default function ImageUtility() {
           {originalUrl ? (
             <div className="space-y-2">
               <img src={originalUrl} alt="Preview" className="max-h-32 mx-auto rounded-lg" />
-              <p className="text-sm text-gray-400">
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                 {originalSize?.w} × {originalSize?.h}px · Click to change
               </p>
             </div>
@@ -111,7 +112,7 @@ export default function ImageUtility() {
               <svg className="w-10 h-10 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="text-gray-500">Drop an image here or click to upload</p>
+              <p style={{ color: 'var(--text-muted)' }}>Drop an image here or click to upload</p>
               <p className="text-xs text-gray-600 mt-1">Supports JPG, PNG, WebP, GIF, BMP</p>
             </>
           )}
@@ -124,7 +125,7 @@ export default function ImageUtility() {
               <div className="panel-label">Options</div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Width (px)</label>
+                  <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Width (px)</label>
                   <input
                     type="number" min={1}
                     className="input-base"
@@ -133,7 +134,7 @@ export default function ImageUtility() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Height (px)</label>
+                  <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Height (px)</label>
                   <input
                     type="number" min={1}
                     className="input-base"
@@ -142,7 +143,7 @@ export default function ImageUtility() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Format</label>
+                  <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Format</label>
                   <select value={format} onChange={e => setFormat(e.target.value as OutputFormat)} className="input-base">
                     <option value="image/jpeg">JPEG</option>
                     <option value="image/png">PNG</option>
@@ -150,7 +151,7 @@ export default function ImageUtility() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Quality ({quality}%)</label>
+                  <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Quality ({quality}%)</label>
                   <input
                     type="range" min={10} max={100} step={5}
                     className="w-full"
@@ -159,12 +160,12 @@ export default function ImageUtility() {
                   />
                 </div>
               </div>
-              <label className="flex items-center gap-2 mt-3 text-sm text-gray-400 cursor-pointer">
+              <label className="flex items-center gap-2 mt-3 text-sm cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
                 <input
                   type="checkbox"
                   checked={maintainAspect}
                   onChange={e => setMaintainAspect(e.target.checked)}
-                  className="rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-0"
+                  className="rounded"
                 />
                 Maintain aspect ratio
               </label>
@@ -186,11 +187,11 @@ export default function ImageUtility() {
               <div className="panel">
                 <div className="flex items-center justify-between mb-3">
                   <div className="panel-label">Output</div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                     {width} × {height}px · {outputSize !== null ? fmtBytes(outputSize) : ''}
                   </span>
                 </div>
-                <img src={outputUrl} alt="Output" className="max-w-full max-h-64 mx-auto rounded-lg border border-gray-700" />
+                <img src={outputUrl} alt="Output" className="max-w-full max-h-64 mx-auto rounded-lg" style={{ border: '1px solid var(--border)' }} />
               </div>
             )}
           </>

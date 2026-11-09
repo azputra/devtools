@@ -43,11 +43,11 @@ const STATUS_CODES: { code: number; text: string; desc: string; category: string
 ]
 
 function getCategoryColor(cat: string) {
-  if (cat.startsWith('1xx')) return 'bg-gray-500/20 text-gray-400 border-gray-500/30'
-  if (cat.startsWith('2xx')) return 'bg-green-500/20 text-green-400 border-green-500/30'
-  if (cat.startsWith('3xx')) return 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-  if (cat.startsWith('4xx')) return 'bg-orange-500/20 text-orange-400 border-orange-500/30'
-  return 'bg-red-500/20 text-red-400 border-red-500/30'
+  if (cat.startsWith('1xx')) return 'text-slate-400'
+  if (cat.startsWith('2xx')) return 'text-green-500'
+  if (cat.startsWith('3xx')) return 'text-blue-500'
+  if (cat.startsWith('4xx')) return 'text-orange-500'
+  return 'text-red-500'
 }
 
 export default function HttpStatusLookup() {
@@ -86,9 +86,12 @@ export default function HttpStatusLookup() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                activeCategory === cat ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-              }`}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{
+                background: activeCategory === cat ? 'var(--accent)' : 'var(--bg-elevated)',
+                color: activeCategory === cat ? 'white' : 'var(--text-secondary)',
+                border: `1px solid ${activeCategory === cat ? 'var(--accent)' : 'var(--border)'}`,
+              }}
             >
               {cat}
             </button>
@@ -97,17 +100,17 @@ export default function HttpStatusLookup() {
 
         <div className="space-y-2">
           {filtered.map(s => (
-            <div key={s.code} className={`panel border ${getCategoryColor(s.category)}`}>
+            <div key={s.code} className="panel">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <span className="text-2xl font-bold font-mono">{s.code}</span>
+                  <span className={`text-2xl font-bold font-mono ${getCategoryColor(s.category)}`}>{s.code}</span>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-semibold text-white">{s.text}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${getCategoryColor(s.category)}`}>{s.category}</span>
+                    <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{s.text}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${getCategoryColor(s.category)}`} style={{ background: 'var(--bg-elevated)' }}>{s.category}</span>
                   </div>
-                  <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{s.desc}</p>
                 </div>
               </div>
             </div>

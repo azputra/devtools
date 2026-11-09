@@ -114,11 +114,15 @@ export default function CronParser() {
             spellCheck={false}
           />
           {/* Field labels */}
-          <div className="mt-2 grid grid-cols-5 gap-1 text-xs text-center text-gray-600">
+          <div className="mt-2 grid grid-cols-5 gap-1 text-xs text-center">
             {['Minute\n(0-59)', 'Hour\n(0-23)', 'Day\n(1-31)', 'Month\n(1-12)', 'Weekday\n(0-6)'].map((l, i) => (
-              <div key={i} className={`bg-gray-800 rounded px-1 py-1 ${fields[i] && fields[i] !== '*' ? 'border border-indigo-500/40 text-indigo-400' : ''}`}>
-                <div className="font-mono text-gray-300">{fields[i] || '*'}</div>
-                <div className="whitespace-pre text-gray-600 text-xs leading-tight mt-0.5">{l}</div>
+              <div key={i} className="rounded px-1 py-1" style={{
+                background: 'var(--bg-elevated)',
+                border: `1px solid ${fields[i] && fields[i] !== '*' ? 'var(--accent)' : 'transparent'}`,
+                color: fields[i] && fields[i] !== '*' ? 'var(--accent)' : 'var(--text-secondary)',
+              }}>
+                <div className="font-mono">{fields[i] || '*'}</div>
+                <div className="whitespace-pre text-xs leading-tight mt-0.5" style={{ color: 'var(--text-muted)' }}>{l}</div>
               </div>
             ))}
           </div>
@@ -132,9 +136,10 @@ export default function CronParser() {
               <button
                 key={p.expr}
                 onClick={() => setExpr(p.expr)}
-                className="btn-ghost text-xs font-mono border border-gray-700"
+                className="btn-ghost text-xs font-mono"
+                style={{ border: '1px solid var(--border)' }}
               >
-                {p.label} <span className="text-gray-600 ml-1">{p.expr}</span>
+                {p.label} <span className="ml-1" style={{ color: 'var(--text-muted)' }}>{p.expr}</span>
               </button>
             ))}
           </div>
@@ -157,10 +162,10 @@ export default function CronParser() {
               <div className="panel-label">Next 5 Run Times</div>
               <div className="space-y-2">
                 {nextRuns.map((date, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-gray-800 rounded-lg px-3 py-2">
-                    <span className="text-indigo-400 text-xs w-4">{i + 1}</span>
-                    <span className="font-mono text-sm text-gray-200">{date.toLocaleString()}</span>
-                    <span className="text-xs text-gray-600 ml-auto">
+                  <div key={i} className="flex items-center gap-3 rounded-lg px-3 py-2" style={{ background: 'var(--bg-elevated)' }}>
+                    <span className="text-xs w-4" style={{ color: 'var(--accent)' }}>{i + 1}</span>
+                    <span className="font-mono text-sm" style={{ color: 'var(--text-primary)' }}>{date.toLocaleString()}</span>
+                    <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>
                       {Math.round((date.getTime() - Date.now()) / 60000)} min from now
                     </span>
                   </div>

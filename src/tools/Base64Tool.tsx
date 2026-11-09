@@ -50,9 +50,12 @@ export default function Base64Tool() {
               <button
                 key={m}
                 onClick={() => setMode(m)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  mode === m ? 'bg-indigo-600 text-white' : 'btn-secondary'
-                }`}
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                style={{
+                  background: mode === m ? 'var(--accent)' : 'var(--bg-elevated)',
+                  color: mode === m ? 'white' : 'var(--text-primary)',
+                  border: `1px solid ${mode === m ? 'var(--accent)' : 'var(--border)'}`,
+                }}
               >
                 {m.charAt(0).toUpperCase() + m.slice(1)}
               </button>
@@ -63,9 +66,12 @@ export default function Base64Tool() {
               <button
                 key={v}
                 onClick={() => setVariant(v)}
-                className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
-                  variant === v ? 'bg-gray-700 text-white' : 'bg-gray-800 text-gray-500 hover:text-gray-300'
-                }`}
+                className="px-3 py-2 rounded-lg text-xs font-medium transition-all"
+                style={{
+                  background: variant === v ? 'var(--bg-elevated)' : 'var(--bg-surface)',
+                  color: variant === v ? 'var(--text-primary)' : 'var(--text-muted)',
+                  border: `1px solid ${variant === v ? 'var(--accent)' : 'var(--border)'}`,
+                }}
               >
                 {v === 'url' ? 'URL-safe' : 'Standard'}
               </button>

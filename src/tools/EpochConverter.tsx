@@ -69,8 +69,8 @@ export default function EpochConverter() {
             <button onClick={setNow} className="btn-secondary whitespace-nowrap">Now</button>
           </div>
           {date && (
-            <p className="mt-2 text-xs text-gray-500">
-              Detected as: <span className="text-indigo-400">{isMs ? 'milliseconds' : 'seconds'}</span>
+            <p className="mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+              Detected as: <span style={{ color: 'var(--accent)' }}>{isMs ? 'milliseconds' : 'seconds'}</span>
             </p>
           )}
         </div>
@@ -95,8 +95,8 @@ export default function EpochConverter() {
             <div className="panel-label">All Formats</div>
             <div className="space-y-2">
               {Object.entries(formats).map(([label, value]) => (
-                <div key={label} className="flex items-center justify-between gap-3 bg-gray-800 rounded-lg px-3 py-2">
-                  <span className="text-xs text-gray-500 w-32 flex-shrink-0">{label}</span>
+                <div key={label} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2" style={{ background: 'var(--bg-elevated)' }}>
+                  <span className="text-xs w-32 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>{label}</span>
                   <span className="font-mono text-xs text-gray-200 flex-1 truncate">{value}</span>
                   <button onClick={() => copy(value, label)} className="copy-btn flex-shrink-0">
                     {copied === label ? (

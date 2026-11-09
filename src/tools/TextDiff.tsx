@@ -94,7 +94,7 @@ export default function TextDiff() {
         <div className="flex items-center gap-4 text-sm">
           <span className="text-green-400 font-medium">+{added} added</span>
           <span className="text-red-400 font-medium">-{removed} removed</span>
-          <span className="text-gray-500">{diffLines.filter(l => l.type === 'same').length} unchanged</span>
+          <span style={{ color: 'var(--text-muted)' }}>{diffLines.filter(l => l.type === 'same').length} unchanged</span>
         </div>
 
         {/* Diff output */}
@@ -105,15 +105,15 @@ export default function TextDiff() {
               <div
                 key={i}
                 className={`flex gap-2 px-2 py-0.5 ${
-                  line.type === 'add' ? 'bg-green-950/60 text-green-300' :
-                  line.type === 'remove' ? 'bg-red-950/60 text-red-300' :
-                  'text-gray-500'
+                  line.type === 'add' ? 'diff-add' :
+                  line.type === 'remove' ? 'diff-remove' :
+                  'diff-same'
                 }`}
               >
                 <span className="w-4 flex-shrink-0 select-none">
                   {line.type === 'add' ? '+' : line.type === 'remove' ? '-' : ' '}
                 </span>
-                <span className="w-8 text-right text-gray-600 flex-shrink-0 select-none">
+                <span className="w-8 text-right flex-shrink-0 select-none" style={{ color: 'var(--text-muted)' }}>
                   {line.type === 'remove' ? line.lineA : line.type === 'add' ? line.lineB : line.lineA}
                 </span>
                 <span className="whitespace-pre flex-1">{line.text}</span>

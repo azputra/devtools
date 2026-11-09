@@ -66,8 +66,8 @@ export default function ColorPicker() {
         <div className="panel">
           <div className="flex items-center gap-6">
             <div
-              className="w-24 h-24 rounded-xl border border-gray-700 flex-shrink-0"
-              style={{ backgroundColor: current }}
+              className="w-24 h-24 rounded-xl flex-shrink-0"
+              style={{ border: '1px solid var(--border)', backgroundColor: current }}
             />
             <div className="flex-1">
               <div className="panel-label">Pick Color</div>
@@ -105,8 +105,8 @@ export default function ColorPicker() {
               <button
                 key={color}
                 onClick={() => setCurrent(color)}
-                className={`w-8 h-8 rounded-lg border-2 transition-transform hover:scale-110 ${current === color ? 'border-white' : 'border-transparent'}`}
-                style={{ backgroundColor: color }}
+                className="w-8 h-8 rounded-lg border-2 transition-transform hover:scale-110"
+                style={{ backgroundColor: color, borderColor: current === color ? 'var(--text-primary)' : 'transparent' }}
                 title={color}
               />
             ))}
@@ -121,11 +121,11 @@ export default function ColorPicker() {
               <div key={i} className="flex-1 group relative">
                 <button
                   onClick={() => setCurrent(shade)}
-                  className="w-full h-10 rounded-lg border border-gray-700 hover:border-white transition-colors"
-                  style={{ backgroundColor: shade }}
+                  className="w-full h-10 rounded-lg transition-colors"
+                  style={{ border: '1px solid var(--border)', backgroundColor: shade }}
                   title={shade}
                 />
-                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-gray-600 font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--text-muted)' }}>
                   {(9 - i) * 100}
                 </div>
               </div>
@@ -142,12 +142,12 @@ export default function ColorPicker() {
             </button>
           </div>
           {palette.length === 0 ? (
-            <p className="text-gray-600 text-sm text-center py-4">Add colors to build your palette</p>
+            <p className="text-sm text-center py-4" style={{ color: 'var(--text-muted)' }}>Add colors to build your palette</p>
           ) : (
             <div className="space-y-2">
               {palette.map((c, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg border border-gray-700 flex-shrink-0 cursor-pointer hover:border-white transition-colors" style={{ backgroundColor: c.hex }} onClick={() => setCurrent(c.hex)} />
+                  <div className="w-10 h-10 rounded-lg flex-shrink-0 cursor-pointer transition-colors" style={{ backgroundColor: c.hex, border: '1px solid var(--border)' }} onClick={() => setCurrent(c.hex)} />
                   {editLabel === i ? (
                     <input
                       autoFocus
@@ -158,9 +158,9 @@ export default function ColorPicker() {
                       onKeyDown={e => e.key === 'Enter' && setEditLabel(null)}
                     />
                   ) : (
-                    <span className="text-sm text-gray-300 flex-1 cursor-pointer hover:text-white" onClick={() => setEditLabel(i)}>{c.label}</span>
+                    <span className="text-sm flex-1 cursor-pointer" style={{ color: 'var(--text-secondary)' }} onClick={() => setEditLabel(i)}>{c.label}</span>
                   )}
-                  <span className="font-mono text-xs text-gray-500">{c.hex}</span>
+                  <span className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{c.hex}</span>
                   <button onClick={() => copy(c.hex, `pal-${i}`)} className="copy-btn">
                     {copied === `pal-${i}` ? <svg className="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                     : <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>}

@@ -15,7 +15,7 @@ function renderMarkdown(md: string): string {
 
   const flushList = () => {
     if (listItems.length > 0) {
-      result.push(`<ul class="list-disc list-inside space-y-1 my-3 text-gray-300">${listItems.map(i => `<li>${i}</li>`).join('')}</ul>`)
+      result.push(`<ul class="list-disc list-inside space-y-1 my-3 md-text">${listItems.map(i => `<li>${i}</li>`).join('')}</ul>`)
       listItems = []
       inList = false
     }
@@ -23,11 +23,11 @@ function renderMarkdown(md: string): string {
 
   const inlineFormat = (text: string): string => {
     return text
-      .replace(/`([^`]+)`/g, '<code class="bg-gray-800 text-indigo-300 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
-      .replace(/\*([^*]+)\*/g, '<em class="text-gray-200 italic">$1</em>')
-      .replace(/~~([^~]+)~~/g, '<del class="text-gray-500">$1</del>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-indigo-400 hover:text-indigo-300 underline" target="_blank" rel="noopener">$1</a>')
+      .replace(/`([^`]+)`/g, '<code class="md-code px-1.5 py-0.5 rounded text-sm font-mono">$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong class="md-text font-semibold">$1</strong>')
+      .replace(/\*([^*]+)\*/g, '<em class="md-text italic">$1</em>')
+      .replace(/~~([^~]+)~~/g, '<del class="md-muted">$1</del>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="md-link underline" target="_blank" rel="noopener">$1</a>')
       .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img alt="$1" src="$2" class="max-w-full rounded-lg my-2" />')
   }
 
@@ -43,7 +43,7 @@ function renderMarkdown(md: string): string {
         codeLines = []
       } else {
         const escaped = codeLines.map(escapeHtml).join('\n')
-        result.push(`<pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 overflow-auto my-3"><code class="text-sm font-mono text-gray-200 language-${codeLang || 'text'}">${escaped}</code></pre>`)
+        result.push(`<pre class="md-pre rounded-lg p-4 overflow-auto my-3"><code class="text-sm font-mono md-text language-${codeLang || 'text'}">${escaped}</code></pre>`)
         inCode = false
         codeLang = ''
         codeLines = []
@@ -61,21 +61,21 @@ function renderMarkdown(md: string): string {
       flushList()
       const level = headingMatch[1].length
       const sizes = ['text-3xl', 'text-2xl', 'text-xl', 'text-lg', 'text-base', 'text-sm']
-      result.push(`<h${level} class="${sizes[level-1]} font-bold text-white mt-6 mb-3 border-b border-gray-800 pb-1">${inlineFormat(headingMatch[2])}</h${level}>`)
+      result.push(`<h${level} class="${sizes[level-1]} font-bold md-heading mt-6 mb-3 md-border pb-1">${inlineFormat(headingMatch[2])}</h${level}>`)
       continue
     }
 
     // HR
     if (/^---+$/.test(line.trim()) || /^\*\*\*+$/.test(line.trim())) {
       flushList()
-      result.push('<hr class="border-gray-700 my-6" />')
+      result.push('<hr class="md-border-hr my-6" />')
       continue
     }
 
     // Blockquote
     if (line.startsWith('> ')) {
       flushList()
-      result.push(`<blockquote class="border-l-4 border-indigo-500 pl-4 py-1 my-3 text-gray-400 italic">${inlineFormat(line.slice(2))}</blockquote>`)
+      result.push(`<blockquote class="md-blockquote pl-4 py-1 my-3 md-secondary italic">${inlineFormat(line.slice(2))}</blockquote>`)
       continue
     }
 
@@ -96,9 +96,9 @@ function renderMarkdown(md: string): string {
       if (!isSep) {
         const isHeader = lines[i + 1]?.includes('|') && lines[i + 1]?.split('|').filter((_, i, a) => i > 0 && i < a.length - 1).every(c => /^[-:]+$/.test(c.trim()))
         if (isHeader) {
-          result.push('<table class="w-full text-sm my-4 border-collapse"><thead class="bg-gray-800"><tr>' + cells.map(c => `<th class="px-3 py-2 text-left text-gray-200 font-medium">${inlineFormat(c)}</th>`).join('') + '</tr></thead><tbody>')
+          result.push('<table class="w-full text-sm my-4 border-collapse"><thead class="md-thead"><tr>' + cells.map(c => `<th class="px-3 py-2 text-left md-text font-medium">${inlineFormat(c)}</th>`).join('') + '</tr></thead><tbody>')
         } else {
-          result.push('<tr class="border-b border-gray-800 hover:bg-gray-800/50">' + cells.map(c => `<td class="px-3 py-2 text-gray-300">${inlineFormat(c)}</td>`).join('') + '</tr>')
+          result.push('<tr class="md-tr">' + cells.map(c => `<td class="px-3 py-2 md-secondary">${inlineFormat(c)}</td>`).join('') + '</tr>')
           if (!lines[i + 1]?.includes('|')) result.push('</tbody></table>')
         }
       }
@@ -110,7 +110,7 @@ function renderMarkdown(md: string): string {
       flushList()
       result.push('')
     } else {
-      result.push(`<p class="text-gray-300 leading-relaxed my-2">${inlineFormat(line)}</p>`)
+      result.push(`<p class="md-text leading-relaxed my-2">${inlineFormat(line)}</p>`)
     }
   }
   flushList()
@@ -181,9 +181,12 @@ export default function MarkdownPreview() {
             <button
               key={v}
               onClick={() => setView(v)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                view === v ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-              }`}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{
+                background: view === v ? 'var(--accent)' : 'var(--bg-elevated)',
+                color: view === v ? 'white' : 'var(--text-muted)',
+                border: `1px solid ${view === v ? 'var(--accent)' : 'var(--border)'}`,
+              }}
             >
               {v.charAt(0).toUpperCase() + v.slice(1)}
             </button>

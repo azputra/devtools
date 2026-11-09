@@ -49,15 +49,15 @@ export default function InvoiceGenerator() {
         <div className="panel">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Invoice Number</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Invoice Number</label>
               <input className="input-base" value={invoiceNo} onChange={e => setInvoiceNo(e.target.value)} />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Date</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Date</label>
               <input type="date" className="input-base" value={date} onChange={e => setDate(e.target.value)} />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Due Date</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Due Date</label>
               <input type="date" className="input-base" value={dueDate} onChange={e => setDueDate(e.target.value)} />
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function InvoiceGenerator() {
             </button>
           </div>
           <div className="space-y-2">
-            <div className="grid grid-cols-12 gap-2 text-xs text-gray-500 px-1">
+            <div className="grid grid-cols-12 gap-2 text-xs px-1" style={{ color: 'var(--text-muted)' }}>
               <span className="col-span-6">Description</span>
               <span className="col-span-2 text-right">Qty</span>
               <span className="col-span-2 text-right">Rate</span>
@@ -111,7 +111,7 @@ export default function InvoiceGenerator() {
                   value={item.rate}
                   onChange={e => updateItem(i, 'rate', Number(e.target.value))}
                 />
-                <div className="col-span-1 text-right text-sm text-gray-300 font-mono">
+                <div className="col-span-1 text-right text-sm font-mono" style={{ color: 'var(--text-secondary)' }}>
                   {fmt(item.qty * item.rate)}
                 </div>
                 <button onClick={() => removeItem(i)} className="col-span-1 copy-btn text-red-500 justify-center flex">
@@ -127,31 +127,31 @@ export default function InvoiceGenerator() {
           <div className="flex justify-end">
             <div className="w-64 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Subtotal</span>
-                <span className="font-mono text-gray-200">{fmt(subtotal)}</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Subtotal</span>
+                <span className="font-mono" style={{ color: 'var(--text-primary)' }}>{fmt(subtotal)}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-400 flex-1">Tax (%)</span>
+                <span className="text-sm flex-1" style={{ color: 'var(--text-secondary)' }}>Tax (%)</span>
                 <input
                   type="number" min={0} max={100} step={0.5}
                   className="input-base w-20 text-sm text-right"
                   value={taxRate}
                   onChange={e => setTaxRate(Number(e.target.value))}
                 />
-                <span className="font-mono text-sm text-gray-200 w-24 text-right">{fmt(tax)}</span>
+                <span className="font-mono text-sm w-24 text-right" style={{ color: 'var(--text-primary)' }}>{fmt(tax)}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-500 flex-1">Currency</span>
+                <span className="text-xs flex-1" style={{ color: 'var(--text-muted)' }}>Currency</span>
                 <select
                   value={currency}
                   onChange={e => setCurrency(e.target.value)}
-                  className="bg-gray-800 border border-gray-700 rounded-md text-xs text-gray-300 px-2 py-1 focus:outline-none"
+                  className="select-inline"
                 >
                   {['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'].map(c => <option key={c}>{c}</option>)}
                 </select>
               </div>
-              <div className="border-t border-gray-700 pt-2 flex justify-between">
-                <span className="font-semibold text-white">Total</span>
+              <div className="pt-2 flex justify-between" style={{ borderTop: '1px solid var(--border)' }}>
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Total</span>
                 <span className="font-bold text-indigo-400 font-mono text-lg">{fmt(total)}</span>
               </div>
             </div>

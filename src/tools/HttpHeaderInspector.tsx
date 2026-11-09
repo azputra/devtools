@@ -74,14 +74,14 @@ export default function HttpHeaderInspector() {
         {/* Summary badges */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: 'Total Headers', value: headers.length, color: 'text-gray-200' },
+            { label: 'Total Headers', value: headers.length, color: '' },
             { label: 'Duplicates', value: duplicates.length, color: duplicates.length > 0 ? 'text-red-400' : 'text-green-400' },
             { label: 'CORS Headers', value: cors.length, color: 'text-blue-400' },
             { label: 'Security Headers', value: security.length, color: 'text-green-400' },
           ].map(s => (
             <div key={s.label} className="panel text-center">
               <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
-              <div className="text-xs text-gray-500 mt-1">{s.label}</div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -119,9 +119,12 @@ export default function HttpHeaderInspector() {
                 const badge = getBadge(h.name)
                 const isDup = duplicates.includes(h.name.toLowerCase())
                 return (
-                  <div key={i} className={`flex items-start gap-3 bg-gray-800 rounded-lg px-3 py-2 ${isDup ? 'border border-red-500/30' : ''}`}>
-                    <span className="font-mono text-xs text-indigo-300 flex-shrink-0 w-56 truncate">{h.name}</span>
-                    <span className="font-mono text-xs text-gray-300 flex-1 break-all">{h.value}</span>
+                  <div key={i} className="flex items-start gap-3 rounded-lg px-3 py-2" style={{
+                    background: 'var(--bg-elevated)',
+                    border: isDup ? '1px solid rgba(239,68,68,0.3)' : '1px solid transparent',
+                  }}>
+                    <span className="font-mono text-xs flex-shrink-0 w-56 truncate" style={{ color: 'var(--accent)' }}>{h.name}</span>
+                    <span className="font-mono text-xs flex-1 break-all" style={{ color: 'var(--text-secondary)' }}>{h.value}</span>
                     {badge && (
                       <span className={`text-xs px-1.5 py-0.5 rounded flex-shrink-0 ${badge.color}`}>{badge.label}</span>
                     )}

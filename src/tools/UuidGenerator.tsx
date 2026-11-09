@@ -39,7 +39,7 @@ export default function UuidGenerator() {
         <div className="panel">
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
-              <label className="text-sm text-gray-400">Count:</label>
+              <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Count:</label>
               <input
                 type="number"
                 min={1}
@@ -49,12 +49,12 @@ export default function UuidGenerator() {
                 className="input-base w-20"
               />
             </div>
-            <label className="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
-              <input type="checkbox" checked={upper} onChange={e => setUpper(e.target.checked)} className="rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-0" />
+            <label className="flex items-center gap-2 text-sm cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
+              <input type="checkbox" checked={upper} onChange={e => setUpper(e.target.checked)} className="rounded" />
               Uppercase
             </label>
-            <label className="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
-              <input type="checkbox" checked={hyphens} onChange={e => setHyphens(e.target.checked)} className="rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-0" />
+            <label className="flex items-center gap-2 text-sm cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
+              <input type="checkbox" checked={hyphens} onChange={e => setHyphens(e.target.checked)} className="rounded" />
               Hyphens
             </label>
             <button onClick={generate} className="btn-primary">Generate</button>
@@ -76,9 +76,9 @@ export default function UuidGenerator() {
         <div className="panel">
           <div className="space-y-1.5 max-h-[32rem] overflow-y-auto">
             {formatted.map((uuid, i) => (
-              <div key={i} className="flex items-center gap-3 bg-gray-800 rounded-lg px-3 py-2 group">
-                <span className="text-gray-600 text-xs w-6 text-right flex-shrink-0">{i + 1}</span>
-                <span className="font-mono text-sm text-gray-200 flex-1 select-all">{uuid}</span>
+              <div key={i} className="flex items-center gap-3 rounded-lg px-3 py-2 group" style={{ background: 'var(--bg-elevated)' }}>
+                <span className="text-xs w-6 text-right flex-shrink-0" style={{ color: 'var(--text-muted)' }}>{i + 1}</span>
+                <span className="font-mono text-sm flex-1 select-all" style={{ color: 'var(--text-primary)' }}>{uuid}</span>
                 <button onClick={() => copy(uuid, i)} className="copy-btn opacity-0 group-hover:opacity-100 transition-opacity">
                   {copied === i ? (
                     <svg className="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

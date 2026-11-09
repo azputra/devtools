@@ -89,14 +89,14 @@ export default function JwtInspector() {
                       {result.expired ? 'Token Expired' : 'Token Valid'}
                     </span>
                     {result.expiresIn !== null && (
-                      <span className="text-xs text-gray-500 ml-2">
+                      <span className="text-xs ml-2" style={{ color: 'var(--text-muted)' }}>
                         {result.expired
                           ? `Expired ${formatExpiry(result.expiresIn)} ago`
                           : `Expires in ${formatExpiry(result.expiresIn)}`}
                       </span>
                     )}
                   </div>
-                  <div className="ml-auto text-xs text-gray-500">
+                  <div className="ml-auto text-xs" style={{ color: 'var(--text-muted)' }}>
                     {result.exp && new Date(result.exp * 1000).toLocaleString()}
                   </div>
                 </div>
@@ -140,9 +140,9 @@ export default function JwtInspector() {
                     { label: 'Issued At', value: result.iat ? new Date(result.iat * 1000).toLocaleString() : null },
                     { label: 'Expires', value: result.exp ? new Date(result.exp * 1000).toLocaleString() : null },
                   ].filter(c => c.value).map(c => (
-                    <div key={c.label} className="bg-gray-800 rounded-lg p-3">
-                      <div className="text-xs text-gray-500 mb-1">{c.label}</div>
-                      <div className="text-xs text-gray-200 font-mono break-all">{String(c.value)}</div>
+                    <div key={c.label} className="rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
+                      <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{c.label}</div>
+                      <div className="text-xs font-mono break-all" style={{ color: 'var(--text-primary)' }}>{String(c.value)}</div>
                     </div>
                   ))}
                 </div>

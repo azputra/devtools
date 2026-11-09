@@ -93,9 +93,12 @@ export default function FixtureGenerator() {
             <button
               key={m}
               onClick={() => setMode(m)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                mode === m ? 'bg-indigo-600 text-white' : 'btn-secondary'
-              }`}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+              style={{
+                background: mode === m ? 'var(--accent)' : 'var(--bg-elevated)',
+                color: mode === m ? 'white' : 'var(--text-primary)',
+                border: `1px solid ${mode === m ? 'var(--accent)' : 'var(--border)'}`,
+              }}
             >
               {m === 'lorem' ? 'Lorem Ipsum' : 'Mock Users'}
             </button>
@@ -106,7 +109,7 @@ export default function FixtureGenerator() {
           {mode === 'lorem' ? (
             <div className="flex flex-wrap gap-4 items-end">
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Type</label>
+                <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Type</label>
                 <select
                   value={loremType}
                   onChange={e => setLoremType(e.target.value as typeof loremType)}
@@ -118,7 +121,7 @@ export default function FixtureGenerator() {
                 </select>
               </div>
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Count</label>
+                <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Count</label>
                 <input
                   type="number" min={1} max={100}
                   value={loremCount}
@@ -131,7 +134,7 @@ export default function FixtureGenerator() {
           ) : (
             <div className="flex flex-wrap gap-4 items-end">
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Number of users</label>
+                <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Number of users</label>
                 <input
                   type="number" min={1} max={100}
                   value={userCount}

@@ -68,9 +68,12 @@ export default function TextEscape() {
             <button
               key={m}
               onClick={() => setMode(m)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                mode === m ? 'bg-indigo-600 text-white' : 'btn-secondary'
-              }`}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+              style={{
+                background: mode === m ? 'var(--accent)' : 'var(--bg-elevated)',
+                color: mode === m ? 'white' : 'var(--text-primary)',
+                border: `1px solid ${mode === m ? 'var(--accent)' : 'var(--border)'}`,
+              }}
             >
               {m.toUpperCase()}
             </button>

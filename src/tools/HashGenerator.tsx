@@ -55,9 +55,11 @@ export default function HashGenerator() {
                 <button
                   key={f}
                   onClick={() => setFormat(f)}
-                  className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
-                    format === f ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-                  }`}
+                  className="px-3 py-1 rounded-md text-xs font-medium transition-all"
+                  style={{
+                    background: format === f ? 'var(--accent)' : 'var(--bg-elevated)',
+                    color: format === f ? 'white' : 'var(--text-muted)',
+                  }}
                 >
                   {f}
                 </button>

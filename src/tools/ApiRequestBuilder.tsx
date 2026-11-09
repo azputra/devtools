@@ -97,7 +97,7 @@ export default function ApiRequestBuilder() {
             <select
               value={method}
               onChange={e => setMethod(e.target.value)}
-              className="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="select-inline rounded-lg px-3 py-2 text-sm font-medium"
               style={{ color: { GET: '#6ee7b7', POST: '#93c5fd', PUT: '#fcd34d', DELETE: '#fca5a5', PATCH: '#c4b5fd' }[method] || '#e5e7eb' }}
             >
               {['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'].map(m => (
@@ -119,16 +119,16 @@ export default function ApiRequestBuilder() {
 
         {/* Tabs */}
         <div className="panel">
-          <div className="flex gap-1 mb-4 border-b border-gray-800 -mx-4 px-4">
+          <div className="flex gap-1 mb-4 -mx-4 px-4" style={{ borderBottom: '1px solid var(--border)' }}>
             {(['headers', 'body', 'curl'] as const).map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 -mb-px ${
-                  activeTab === tab
-                    ? 'text-indigo-400 border-indigo-500'
-                    : 'text-gray-500 border-transparent hover:text-gray-300'
-                }`}
+                className="px-4 py-2 text-sm font-medium transition-colors border-b-2 -mb-px"
+                style={{
+                  color: activeTab === tab ? 'var(--accent)' : 'var(--text-muted)',
+                  borderBottomColor: activeTab === tab ? 'var(--accent)' : 'transparent',
+                }}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
@@ -141,7 +141,7 @@ export default function ApiRequestBuilder() {
             <div className="space-y-2">
               {headers.map((h, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <input type="checkbox" checked={h.enabled} onChange={e => updateHeader(i, 'enabled', e.target.checked)} className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-0" />
+                  <input type="checkbox" checked={h.enabled} onChange={e => updateHeader(i, 'enabled', e.target.checked)} className="w-4 h-4 rounded" />
                   <input className="input-base flex-1 text-xs font-mono" value={h.key} onChange={e => updateHeader(i, 'key', e.target.value)} placeholder="Header-Name" />
                   <input className="input-base flex-1 text-xs font-mono" value={h.value} onChange={e => updateHeader(i, 'value', e.target.value)} placeholder="value" />
                   <button onClick={() => removeHeader(i)} className="copy-btn text-red-500">
@@ -189,7 +189,7 @@ export default function ApiRequestBuilder() {
               <>
                 <div className="flex items-center gap-3 mb-4">
                   <span className={`text-lg font-bold ${statusColor}`}>{response.status}</span>
-                  <span className="text-gray-400 text-sm">{response.statusText}</span>
+                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{response.statusText}</span>
                 </div>
                 <div className="space-y-3">
                   <div>
@@ -197,8 +197,8 @@ export default function ApiRequestBuilder() {
                     <div className="space-y-1">
                       {Object.entries(response.headers).map(([k, v]) => (
                         <div key={k} className="flex gap-3 text-xs font-mono">
-                          <span className="text-indigo-300 w-40 flex-shrink-0 truncate">{k}</span>
-                          <span className="text-gray-300">{v}</span>
+                          <span className="w-40 flex-shrink-0 truncate" style={{ color: 'var(--accent)' }}>{k}</span>
+                          <span style={{ color: 'var(--text-secondary)' }}>{v}</span>
                         </div>
                       ))}
                     </div>

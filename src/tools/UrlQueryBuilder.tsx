@@ -82,7 +82,7 @@ export default function UrlQueryBuilder() {
           <div className="panel-label">URL Parts</div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Protocol</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Protocol</label>
               <select
                 value={protocol}
                 onChange={e => setProtocol(e.target.value)}
@@ -95,15 +95,15 @@ export default function UrlQueryBuilder() {
               </select>
             </div>
             <div className="col-span-2">
-              <label className="text-xs text-gray-500 mb-1 block">Host</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Host</label>
               <input className="input-base" value={host} onChange={e => setHost(e.target.value)} placeholder="example.com" />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Hash</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Hash</label>
               <input className="input-base" value={hash} onChange={e => setHash(e.target.value)} placeholder="section" />
             </div>
             <div className="col-span-4">
-              <label className="text-xs text-gray-500 mb-1 block">Path</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Path</label>
               <input className="input-base" value={path} onChange={e => setPath(e.target.value)} placeholder="/api/v1/resource" />
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function UrlQueryBuilder() {
                   type="checkbox"
                   checked={p.enabled}
                   onChange={e => updateParam(i, 'enabled', e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-0"
+                  className="w-4 h-4 rounded"
                 />
                 <input
                   className="input-base flex-1 font-mono text-xs"

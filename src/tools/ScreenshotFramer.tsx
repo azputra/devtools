@@ -111,7 +111,8 @@ export default function ScreenshotFramer() {
       <div className="space-y-4">
         {/* Upload */}
         <div
-          className="panel border-2 border-dashed border-gray-700 hover:border-indigo-500 transition-colors cursor-pointer text-center py-8"
+          className="panel border-2 border-dashed transition-colors cursor-pointer text-center py-8"
+          style={{ borderColor: 'var(--border)' }}
           onDrop={handleDrop}
           onDragOver={e => e.preventDefault()}
           onClick={() => fileRef.current?.click()}
@@ -122,10 +123,10 @@ export default function ScreenshotFramer() {
               <svg className="w-10 h-10 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="text-gray-500">Drop a screenshot here or click to upload</p>
+              <p style={{ color: 'var(--text-muted)' }}>Drop a screenshot here or click to upload</p>
             </>
           ) : (
-            <p className="text-sm text-gray-400">Screenshot loaded · Click to change</p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Screenshot loaded · Click to change</p>
           )}
         </div>
 
@@ -133,7 +134,7 @@ export default function ScreenshotFramer() {
         <div className="panel">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Theme</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Theme</label>
               <select value={theme} onChange={e => setTheme(e.target.value as Theme)} className="input-base">
                 <option value="dark">Dark</option>
                 <option value="light">Light</option>
@@ -141,15 +142,15 @@ export default function ScreenshotFramer() {
               </select>
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">URL Bar Text</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>URL Bar Text</label>
               <input className="input-base text-xs" value={url} onChange={e => setUrl(e.target.value)} placeholder="https://..." />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Padding ({padding}px)</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Padding ({padding}px)</label>
               <input type="range" min={0} max={80} step={4} value={padding} onChange={e => setPadding(Number(e.target.value))} className="w-full mt-2" />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Background</label>
+              <label className="text-xs mb-1 block" style={{ color: 'var(--text-muted)' }}>Background</label>
               <div className="flex gap-2 items-center">
                 <input type="color" value={bg} onChange={e => setBg(e.target.value)} className="w-10 h-10 rounded-lg border-0 bg-transparent cursor-pointer" />
                 <input className="input-base text-xs flex-1 font-mono" value={bg} onChange={e => setBg(e.target.value)} />
@@ -181,8 +182,8 @@ export default function ScreenshotFramer() {
               {imageUrl ? (
                 <img src={imageUrl} alt="Screenshot" className="w-full block" />
               ) : (
-                <div className="w-full h-40 bg-gray-800 flex items-center justify-center">
-                  <span className="text-gray-600 text-sm">Upload a screenshot to preview</span>
+                <div className="w-full h-40 flex items-center justify-center" style={{ background: 'var(--bg-elevated)' }}>
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Upload a screenshot to preview</span>
                 </div>
               )}
             </div>

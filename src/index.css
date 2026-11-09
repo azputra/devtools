@@ -2,31 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Theme variables ── */
+/* ── Design tokens — matching azputra.my.id palette ── */
 :root {
-  --bg-base: #ffffff;
-  --bg-surface: #f8fafc;
-  --bg-elevated: #f1f5f9;
-  --border: #e2e8f0;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
-  --accent-muted: #eef2ff;
+  --bg-base:     #e8e2d8;
+  --bg-surface:  #ede8dc;
+  --bg-elevated: #f5f0e8;
+  --border:      rgba(26,43,74,0.1);
+  --text-primary:   #1a2b4a;
+  --text-secondary: rgba(26,43,74,0.6);
+  --text-muted:     rgba(26,43,74,0.38);
+  --accent:         #2a7cbf;
+  --accent-hover:   #1f6aaa;
+  --accent-muted:   rgba(42,124,191,0.08);
+  --accent-warm:    #c07820;
 }
+
 [data-theme="dark"] {
-  --bg-base: #030712;
-  --bg-surface: #0f172a;
-  --bg-elevated: #1e293b;
-  --border: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #475569;
-  --accent: #818cf8;
-  --accent-hover: #6366f1;
-  --accent-muted: #1e1b4b;
+  --bg-base:     #0f1218;
+  --bg-surface:  #161b26;
+  --bg-elevated: #1e2430;
+  --border:      rgba(255,255,255,0.08);
+  --text-primary:   #e8e2d8;
+  --text-secondary: rgba(232,226,216,0.6);
+  --text-muted:     rgba(232,226,216,0.35);
+  --accent:         #7ec8ff;
+  --accent-hover:   #60b4f0;
+  --accent-muted:   rgba(126,200,255,0.1);
+  --accent-warm:    #f0c060;
 }
+
 * { transition: background-color 0.15s, border-color 0.15s, color 0.15s; }
 
 @layer base {
@@ -36,12 +40,15 @@
     color: var(--text-primary);
   }
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
     background: var(--bg-base);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
   }
-  code, pre, .font-mono {
+  h1, h2, h3 {
+    font-family: 'Outfit', 'DM Sans', system-ui, sans-serif;
+  }
+  code, pre, .font-mono, textarea.font-mono {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
 }
@@ -54,10 +61,12 @@
     @apply mb-6;
   }
   .tool-title {
+    font-family: 'Outfit', system-ui, sans-serif;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
   }
   .tool-description {
     color: var(--text-secondary);
@@ -70,11 +79,11 @@
     padding: 1rem;
   }
   .panel-label {
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.6875rem;
+    font-weight: 600;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     margin-bottom: 0.5rem;
   }
   .input-base {
@@ -107,9 +116,9 @@
   .textarea-base::placeholder { color: var(--text-muted); }
   .btn-primary {
     background: var(--accent);
-    color: white;
+    color: #0f1218;
     border-radius: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.875rem;
     padding: 0.5rem 1.25rem;
     border: none;
@@ -121,7 +130,7 @@
   }
   .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
   .btn-secondary {
-    background: var(--bg-elevated);
+    background: transparent;
     color: var(--text-primary);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
@@ -147,14 +156,6 @@
     transition: all 0.15s;
   }
   .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-primary); }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.125rem 0.625rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
   .copy-btn {
     font-size: 0.75rem;
     color: var(--text-muted);
@@ -176,7 +177,6 @@
     color: var(--text-primary);
     overflow: auto;
   }
-  /* Inline select/input used in tools */
   .select-inline {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -191,55 +191,47 @@
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* ── Syntax highlight ── */
-.token-string { color: #86efac; }
-.token-number { color: #93c5fd; }
-.token-bool { color: #f9a8d4; }
-.token-null { color: #d1d5db; }
-.token-key { color: #c4b5fd; }
-.token-punct { color: #9ca3af; }
-
-/* Light mode syntax override */
-:root .token-string { color: #15803d; }
-:root .token-number { color: #1d4ed8; }
-:root .token-bool { color: #be185d; }
-:root .token-null { color: #374151; }
-:root .token-key { color: #7c3aed; }
-:root .token-punct { color: #6b7280; }
+/* ── Syntax highlight (dark) ── */
 [data-theme="dark"] .token-string { color: #86efac; }
 [data-theme="dark"] .token-number { color: #93c5fd; }
-[data-theme="dark"] .token-bool { color: #f9a8d4; }
-[data-theme="dark"] .token-null { color: #d1d5db; }
-[data-theme="dark"] .token-key { color: #c4b5fd; }
-[data-theme="dark"] .token-punct { color: #9ca3af; }
+[data-theme="dark"] .token-bool   { color: #f9a8d4; }
+[data-theme="dark"] .token-null   { color: #94a3b8; }
+[data-theme="dark"] .token-key    { color: var(--accent); }
+[data-theme="dark"] .token-punct  { color: rgba(232,226,216,0.35); }
+
+/* ── Syntax highlight (light) ── */
+:root .token-string { color: #15803d; }
+:root .token-number { color: #1d4ed8; }
+:root .token-bool   { color: #be185d; }
+:root .token-null   { color: #64748b; }
+:root .token-key    { color: #7c3aed; }
+:root .token-punct  { color: rgba(26,43,74,0.4); }
 
 /* ── Diff ── */
-.diff-add { background: #dcfce7; color: #166534; }
-.diff-remove { background: #fee2e2; color: #991b1b; }
-.diff-same { color: var(--text-muted); }
-[data-theme="dark"] .diff-add { background: #052e16; color: #86efac; }
-[data-theme="dark"] .diff-remove { background: #450a0a; color: #fca5a5; }
+.diff-add    { background: rgba(21,128,61,0.1); color: #15803d; }
+.diff-remove { background: rgba(185,28,28,0.1); color: #b91c1c; }
+.diff-same   { color: var(--text-muted); }
+[data-theme="dark"] .diff-add    { background: rgba(134,239,172,0.07); color: #86efac; }
+[data-theme="dark"] .diff-remove { background: rgba(252,165,165,0.07); color: #fca5a5; }
 
-/* ── Markdown preview helpers ── */
-.md-text { color: var(--text-secondary); }
-.md-heading { color: var(--text-primary); }
-.md-secondary { color: var(--text-secondary); }
-.md-muted { color: var(--text-muted); }
-.md-link { color: var(--accent); }
-.md-link:hover { color: var(--accent-hover); }
-.md-code { background: var(--bg-elevated); color: var(--accent); }
-.md-pre { background: var(--bg-elevated); border: 1px solid var(--border); }
-.md-border { border-bottom: 1px solid var(--border); }
+/* ── Markdown ── */
+.md-text      { color: var(--text-secondary); }
+.md-heading   { color: var(--text-primary); font-family: 'Outfit', system-ui, sans-serif; }
+.md-link      { color: var(--accent); }
+.md-link:hover{ color: var(--accent-hover); }
+.md-code      { background: var(--bg-elevated); color: var(--accent); }
+.md-pre       { background: var(--bg-elevated); border: 1px solid var(--border); }
+.md-border    { border-bottom: 1px solid var(--border); }
 .md-border-hr { border-top: 1px solid var(--border); }
-.md-blockquote { border-left: 4px solid var(--accent); }
-.md-thead { background: var(--bg-elevated); }
-.md-tr { border-bottom: 1px solid var(--border); }
+.md-blockquote{ border-left: 3px solid var(--accent); }
+.md-thead     { background: var(--bg-elevated); }
+.md-tr        { border-bottom: 1px solid var(--border); }
 
-/* ── Match highlight ── */
-.match-highlight { background: rgba(234,179,8,0.3); color: #ca8a04; border-radius: 0.2rem; }
-[data-theme="dark"] .match-highlight { background: rgba(234,179,8,0.25); color: #fde047; }
+/* ── Regex match ── */
+.match-highlight { background: rgba(240,192,96,0.25); color: var(--accent-warm); border-radius: 0.2rem; }
+[data-theme="dark"] .match-highlight { background: rgba(240,192,96,0.2); color: #f0c060; }

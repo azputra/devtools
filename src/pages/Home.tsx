@@ -75,7 +75,7 @@ export default function Home() {
       <div
         className="text-center py-14 mb-10 relative rounded-2xl overflow-hidden px-6"
         style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(126,200,255,0.1) 0%, transparent 70%)',
         }}
       >
         <div
@@ -90,15 +90,8 @@ export default function Home() {
           27 tools · all client-side
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight leading-tight">
-          <span
-            className="bg-clip-text"
-            style={{
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundImage: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa)',
-            }}
-          >
+        <h1 style={{ fontFamily: "'Outfit', system-ui, sans-serif", fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: '1rem' }}>
+          <span style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(135deg, var(--accent), var(--accent-warm))' }}>
             Build Faster.
           </span>
           <br />

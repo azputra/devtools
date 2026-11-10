@@ -47,10 +47,16 @@ function jsonPath(obj: unknown, path: string): unknown[] {
     return []
   }
 
-  // Parse path into segments, handling bracket notation
+  // Parse path into segments, handling bracket notation and .. recursive descent
   const segments: string[] = []
   let remaining = p
   while (remaining) {
+    // Handle recursive descent ..
+    if (remaining.startsWith('..')) {
+      segments.push('..')
+      remaining = remaining.slice(2)
+      continue
+    }
     const dotIdx = remaining.indexOf('.')
     const bracketIdx = remaining.indexOf('[')
     if (bracketIdx !== -1 && (dotIdx === -1 || bracketIdx < dotIdx)) {
@@ -62,11 +68,7 @@ function jsonPath(obj: unknown, path: string): unknown[] {
       remaining = remaining.slice(closeIdx + 1).replace(/^\./, '')
     } else if (dotIdx !== -1) {
       const part = remaining.slice(0, dotIdx)
-      if (part === '..') {
-        segments.push('..')
-      } else if (part) {
-        segments.push(part)
-      }
+      if (part) segments.push(part)
       remaining = remaining.slice(dotIdx + 1)
     } else {
       segments.push(remaining)

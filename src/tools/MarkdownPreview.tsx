@@ -10,14 +10,15 @@ function renderMarkdown(md: string): string {
   let inCode = false
   let codeLang = ''
   let codeLines: string[] = []
-  let inList = false
   let listItems: string[] = []
+  let listOrdered = false
 
   const flushList = () => {
     if (listItems.length > 0) {
-      result.push(`<ul class="list-disc list-inside space-y-1 my-3 md-text">${listItems.map(i => `<li>${i}</li>`).join('')}</ul>`)
+      const tag = listOrdered ? 'ol' : 'ul'
+      const cls = listOrdered ? 'list-decimal' : 'list-disc'
+      result.push(`<${tag} class="${cls} list-inside space-y-1 my-3 md-text">${listItems.map(i => `<li>${i}</li>`).join('')}</${tag}>`)
       listItems = []
-      inList = false
     }
   }
 
@@ -34,7 +35,6 @@ function renderMarkdown(md: string): string {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
 
-    // Code block
     if (line.startsWith('```')) {
       if (!inCode) {
         flushList()
@@ -50,12 +50,8 @@ function renderMarkdown(md: string): string {
       }
       continue
     }
-    if (inCode) {
-      codeLines.push(line)
-      continue
-    }
+    if (inCode) { codeLines.push(line); continue }
 
-    // Headings
     const headingMatch = /^(#{1,6})\s+(.+)$/.exec(line)
     if (headingMatch) {
       flushList()
@@ -65,30 +61,30 @@ function renderMarkdown(md: string): string {
       continue
     }
 
-    // HR
     if (/^---+$/.test(line.trim()) || /^\*\*\*+$/.test(line.trim())) {
       flushList()
       result.push('<hr class="md-border-hr my-6" />')
       continue
     }
 
-    // Blockquote
     if (line.startsWith('> ')) {
       flushList()
       result.push(`<blockquote class="md-blockquote pl-4 py-1 my-3 md-secondary italic">${inlineFormat(line.slice(2))}</blockquote>`)
       continue
     }
 
-    // List
-    if (/^[-*+]\s/.test(line) || /^\d+\.\s/.test(line)) {
-      inList = true
+    const orderedMatch = /^\d+\.\s/.exec(line)
+    const unorderedMatch = /^[-*+]\s/.exec(line)
+    if (unorderedMatch || orderedMatch) {
+      const isOrdered = !!orderedMatch
+      if (listItems.length > 0 && isOrdered !== listOrdered) flushList()
+      listOrdered = isOrdered
       listItems.push(inlineFormat(line.replace(/^[-*+\d.]+\s/, '')))
       continue
-    } else if (inList) {
+    } else if (listItems.length > 0) {
       flushList()
     }
 
-    // Table (simple)
     if (line.includes('|')) {
       flushList()
       const cells = line.split('|').filter((_, i, a) => i > 0 && i < a.length - 1).map(c => c.trim())
@@ -105,7 +101,6 @@ function renderMarkdown(md: string): string {
       continue
     }
 
-    // Paragraph / blank
     if (line.trim() === '') {
       flushList()
       result.push('')
@@ -115,6 +110,10 @@ function renderMarkdown(md: string): string {
   }
   flushList()
   return result.join('\n')
+}
+
+function wordCount(text: string): number {
+  return text.trim().split(/\s+/).filter(Boolean).length
 }
 
 const SAMPLE = `# Markdown Preview
@@ -149,51 +148,57 @@ console.log(greet("World"));
 
 ---
 
-Made with ❤️ using vanilla JS markdown parsing.`
+Made with love using vanilla JS markdown parsing.`
 
 export default function MarkdownPreview() {
   const [input, setInput] = useState(SAMPLE)
-  const [view, setView] = useState<'split' | 'edit' | 'preview'>('split')
-  const [copied, setCopied] = useState(false)
+  const [view, setView] = useState<'split' | 'edit' | 'preview' | 'html'>('split')
+  const [copied, setCopied] = useState<'md' | 'html' | null>(null)
 
-  const copy = () => {
-    navigator.clipboard.writeText(input)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
+  const html = renderMarkdown(input)
+  const words = wordCount(input)
+
+  const copy = (text: string, key: 'md' | 'html') => {
+    navigator.clipboard.writeText(text)
+    setCopied(key)
+    setTimeout(() => setCopied(null), 1500)
   }
 
-  const Preview = () => (
+  const previewContent = (
     <div
       className="prose prose-invert max-w-none"
-      dangerouslySetInnerHTML={{ __html: renderMarkdown(input) }}
+      dangerouslySetInnerHTML={{ __html: html }}
     />
   )
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="tool-header flex items-center justify-between">
+      <div className="tool-header flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="tool-title">Markdown Preview</h1>
           <p className="tool-description">Live markdown editor with instant preview</p>
         </div>
-        <div className="flex gap-2 items-center">
-          {(['edit', 'split', 'preview'] as const).map(v => (
+        <div className="flex gap-2 items-center flex-wrap">
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{words} words · {input.length} chars</span>
+          {(['edit', 'split', 'preview', 'html'] as const).map(v => (
             <button
               key={v}
               onClick={() => setView(v)}
               className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
               style={{
                 background: view === v ? 'var(--accent)' : 'var(--bg-elevated)',
-                color: view === v ? 'white' : 'var(--text-muted)',
+                color: view === v ? '#0f1218' : 'var(--text-muted)',
                 border: `1px solid ${view === v ? 'var(--accent)' : 'var(--border)'}`,
               }}
             >
               {v.charAt(0).toUpperCase() + v.slice(1)}
             </button>
           ))}
-          <button onClick={copy} className="copy-btn ml-1">
-            {copied ? <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-            : <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>}
+          <button onClick={() => copy(input, 'md')} className="copy-btn ml-1" title="Copy Markdown">
+            MD {copied === 'md' ? '✓' : ''}
+          </button>
+          <button onClick={() => copy(html, 'html')} className="copy-btn" title="Copy HTML">
+            HTML {copied === 'html' ? '✓' : ''}
           </button>
         </div>
       </div>
@@ -211,7 +216,7 @@ export default function MarkdownPreview() {
           </div>
           <div className="panel overflow-y-auto">
             <div className="panel-label">Preview</div>
-            <Preview />
+            {previewContent}
           </div>
         </div>
       )}
@@ -230,7 +235,14 @@ export default function MarkdownPreview() {
 
       {view === 'preview' && (
         <div className="panel min-h-96 overflow-y-auto">
-          <Preview />
+          {previewContent}
+        </div>
+      )}
+
+      {view === 'html' && (
+        <div className="panel min-h-96 overflow-y-auto">
+          <div className="panel-label">Raw HTML</div>
+          <pre className="output-area overflow-auto whitespace-pre-wrap text-xs">{html}</pre>
         </div>
       )}
     </div>
